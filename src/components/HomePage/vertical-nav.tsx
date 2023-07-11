@@ -15,7 +15,7 @@ export default function Navbar({ changeHandler, div }: navProps) {
     }
 
     return (
-        <div className="w-1/6 bg-purple-900 text-white px-8 py-4">
+        <div className="w-1/6 bg-[#0F1E54] text-white px-8 py-4">
             <h2 className="font-bold text-2xl"><span className="text-blue-300 ">Do</span>MS</h2>
 
             <div className="mt-28">
