@@ -1,8 +1,8 @@
 "use client";
 
-import { Fragment } from "react";
-import { useFormik } from "formik";
 import { resetPasswordSchema } from "@/schemas/reset_password";
+import { useFormik } from "formik";
+import { Fragment } from "react";
 
 import AuthNavigationBar from "@/components/layout/AuthNavigationBar";
 import ResetPasswordForm from "@/components/ResetPasswordForm";
@@ -24,7 +24,7 @@ function ResetPasswordPage() {
 
   return (
     <Fragment>
-      <AuthNavigationBar routeName="/login" title="Login" />
+      <AuthNavigationBar routeName="/" title="Login" />
       <ResetPasswordForm
         values={values}
         errors={errors}
