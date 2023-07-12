@@ -1,4 +1,5 @@
 import { ChangeEventHandler, FocusEventHandler, FormEventHandler } from "react";
+import { Button } from "@/components/ui/button";
 
 type valuesType = {
   firstname?: string;
@@ -164,12 +165,12 @@ function RegisterForm(props: RegisterFormProps) {
             </select>
           </div>
           <p className="text-red-500 text-xs">{props.errors.roles}</p> */}
-          <button
-            type="submit"
-            className="bg-[#0F1E54] w-full py-2 rounded-sm text-white font-medium hover:bg-white hover:text-[#0F1E54] hover:font-bold hover:border-2 hover:border-[#0F1E54]"
-          >
-            Register
-          </button>
+            <Button
+              type="submit"
+              className="bg-[#0F1E54] w-full py-2 rounded-sm text-white text-[16px] font-medium hover:bg-white hover:text-[#0F1E54] hover:font-bold hover:border-2 hover:border-[#0F1E54]"
+            >
+              Register
+            </Button>
         </form>
       </div>
     </div>

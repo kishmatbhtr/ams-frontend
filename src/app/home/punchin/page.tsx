@@ -1,4 +1,4 @@
-import PunchIn from "@/components/HomePage/punchIn";
+import PunchIn from "@/components/user/PunchIn"
 
 export default function PunchInPage() {
     return (

@@ -5,8 +5,8 @@ import './globals.css'
 const poppins = Poppins({ weight: '400', subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Home',
-  description: 'Home page of next app',
+  title: 'AMS',
+  description: 'Attendence Management System',
 }
 
 export default function RootLayout({

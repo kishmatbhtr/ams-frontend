@@ -1,7 +1,8 @@
 import { ChangeEventHandler, FocusEventHandler, FormEventHandler } from "react";
+import { Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 import Link from "next/link";
-
 type valuesType = {
   email?: string;
   password?: string;
@@ -13,6 +14,7 @@ type errorsType = {
 };
 
 interface LoginFormProps {
+  loading: boolean;
   values: valuesType;
   errors: errorsType;
   onChange: ChangeEventHandler<HTMLInputElement>;
@@ -77,12 +79,22 @@ function LoginForm(props: LoginFormProps) {
               </p>
             </div>
           </div>
-          <button
-            type="submit"
-            className="bg-[#0F1E54] w-full py-2 mt-5 rounded-sm text-white font-medium hover:bg-white hover:text-[#0F1E54] hover:font-bold hover:border-2 hover:border-[#0F1E54]"
-          >
-            Login
-          </button>
+          {props.loading ? (
+            <Button
+              disabled
+              className="bg-[#0F1E54] w-full py-2 mt-5 rounded-sm text-white font-medium hover:bg-white hover:text-[#0F1E54] hover:font-bold hover:border-2 hover:border-[#0F1E54]"
+            >
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Login
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              className="bg-[#0F1E54] w-full py-2 mt-5 rounded-sm text-white text-[16px] font-medium hover:bg-white hover:text-[#0F1E54] hover:font-bold hover:border-2 hover:border-[#0F1E54]"
+            >
+              Login
+            </Button>
+          )}
         </form>
         <div className="p-2 flex justify-center items-center space-x-1">
           <p className="text-[12px]">Forgot your password?</p>

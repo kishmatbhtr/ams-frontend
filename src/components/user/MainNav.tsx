@@ -4,12 +4,12 @@ import { CaretDownFilled, LogoutOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { useState } from "react";
 
-
 export default function MainNav() {
   const [showPanel, setShowPanel] = useState(false);
 
   return (
-    <div className="flex p-4 shadow-md border-b-2 justify-end bg-white">
+    <div className="flex p-4 border-b-2 justify-between bg-white">
+      <h3 className="font-bold text-lg">W E L C O M E !</h3>
       <div
         className="flex items-center cursor-pointer"
         onClick={() => {
@@ -17,19 +17,21 @@ export default function MainNav() {
         }}
       >
         {/* <Image className="" src={userImg} width={32} alt="alt" /> */}
-        <img src="/images/user.png" alt="" className="w-8" />
+        <p className="px-2 font-semibold">User</p>
+        <img src="/images/profile.png" alt="" className="w-8" />
         <CaretDownFilled />
       </div>
       <div
         id="dropdown"
-        className={`${!showPanel ? "hidden" : "absolute"
-          } right-6 top-12 z-10 bg-white divide-y divide-gray-100 rounded-md shadow-sm w-28 border-2 dark:bg-gray-700`}
+        className={`${
+          !showPanel ? "hidden" : "absolute"
+        } right-4 top-14 z-10 bg-white hover:bg-gray-50 divide-y divide-gray-100 rounded-sm w-24 border-2 dark:bg-gray-500`}
       >
-        <ul className="py-2">
+        <ul className="py-1">
           <li>
-            <Link href="/login" className="block px-4 text-md">
+            <Link href="/">
               <span className="flex justify-center items-center">
-                <span className="mx-2 font-semibold">Logout</span>
+                <span className="px-2 text-[15px]">Logout</span>
                 <LogoutOutlined />
               </span>
             </Link>
@@ -37,6 +39,5 @@ export default function MainNav() {
         </ul>
       </div>
     </div>
-
   );
 }

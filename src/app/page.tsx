@@ -3,12 +3,14 @@
 import { loginSchema } from "@/schemas/login";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 
-import LoginForm from "@/components/LoginForm";
-import AuthNavigationBar from "@/components/layout/AuthNavigationBar";
+import LoginForm from "@/components/auth/LoginForm";
+import AuthNavigationBar from "@/components/auth/layout/AuthNavigationBar";
 
 function LoginPage() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
 
   const initialValues = {
@@ -20,8 +22,10 @@ function LoginPage() {
     initialValues: initialValues,
     validationSchema: loginSchema,
     onSubmit: (values) => {
+      setIsLoading(true);
       console.log(values);
-      router.replace('/home');
+
+      router.replace("/home");
     },
   });
 
@@ -29,6 +33,7 @@ function LoginPage() {
     <Fragment>
       <AuthNavigationBar routeName="/register" title="Register Now" />
       <LoginForm
+        loading={isLoading}
         values={values}
         errors={errors}
         onChange={handleChange}

@@ -4,8 +4,8 @@ import { resetPasswordSchema } from "@/schemas/reset_password";
 import { useFormik } from "formik";
 import { Fragment } from "react";
 
-import AuthNavigationBar from "@/components/layout/AuthNavigationBar";
-import ResetPasswordForm from "@/components/ResetPasswordForm";
+import AuthNavigationBar from "@/components/auth/layout/AuthNavigationBar";
+import ResetPasswordForm from "@/components/auth/ResetPasswordForm";
 
 function ResetPasswordPage() {
   const initialValues = {

@@ -1,4 +1,6 @@
 import { ChangeEventHandler, FocusEventHandler, FormEventHandler } from "react";
+import { Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type valuesTypes = {
   email?: string;
@@ -90,12 +92,12 @@ function ResetPasswordForm(props: ResetPasswordFormProps) {
               {props.errors.confirmpassword}
             </p>
           </div>
-          <button
+          <Button
             type="submit"
-            className="bg-[#0F1E54] w-full py-2 rounded-sm text-white font-medium hover:bg-white hover:text-[#0F1E54] hover:font-bold hover:border-2 hover:border-[#0F1E54]"
+            className="bg-[#0F1E54] w-full py-2 rounded-sm text-white text-[16px] font-medium hover:bg-white hover:text-[#0F1E54] hover:font-bold hover:border-2 hover:border-[#0F1E54]"
           >
             Reset
-          </button>
+          </Button>
         </form>
       </div>
     </div>

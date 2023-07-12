@@ -1,5 +1,5 @@
-import MainNav from "@/components/user/MainNav";
-import SideBar from "@/components/user/SideBar";
+import MainNav from "@/components/admin/MainNav";
+import SideBar from "@/components/admin/SideBar";
 
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
@@ -7,7 +7,7 @@ import { Poppins } from "next/font/google";
 const poppins = Poppins({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Home",
+  title: "Admin Home",
   description: "Home page of next app",
 };
 

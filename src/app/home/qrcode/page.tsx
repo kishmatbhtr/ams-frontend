@@ -1,4 +1,4 @@
-import QRCode from "@/components/HomePage/qrcode";
+import QRCode from "@/components/user/QRCode"
 
 export default function QrCodPage() {
     return (

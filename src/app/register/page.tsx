@@ -4,8 +4,8 @@ import { useFormik } from "formik";
 import { registerSchema } from "@/schemas/register";
 import { Fragment } from "react";
 
-import RegisterForm from "@/components/RegisterForm";
-import AuthNavigationBar from "@/components/layout/AuthNavigationBar";
+import RegisterForm from "@/components/auth/RegisterForm";
+import AuthNavigationBar from "@/components/auth/layout/AuthNavigationBar";
 
 function RegisterPage() {
   const initialValues = {
@@ -25,7 +25,7 @@ function RegisterPage() {
   });
   return (
     <Fragment>
-      <AuthNavigationBar routeName="/login" title="Login" />
+      <AuthNavigationBar routeName="/" title="Login" />
       <RegisterForm
         values={values}
         errors={errors}
