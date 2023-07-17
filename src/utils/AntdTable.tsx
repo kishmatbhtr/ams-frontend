@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 
-import { Table, Space } from "antd";
+import { Space } from "antd";
 import type { ColumnsType } from "antd/es/table";
+import { Table } from "antd";
 
 interface DataType {
   key?: number;
@@ -12,12 +13,12 @@ interface DataType {
   email?: string;
 }
 
-// interface UsersType {
-//   id?: number;
-//   first_name?: string;
-//   last_name?: string;
-//   email?: string;
-// }
+interface UsersType {
+  id?: number;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+}
 
 const columns: ColumnsType<DataType> = [
   {
@@ -50,25 +51,17 @@ const columns: ColumnsType<DataType> = [
     ),
   },
 ];
+
 const data: DataType[] = [];
 
-export default async function ManageUsers(props: any) {
-  const data: DataType[] = [];
-  props.users.map((e: any) => {
-    data.push({
-      key: e.id,
-      firstname: e.first_name,
-      lastname: e.last_name,
-      email: e.email,
-    });
-  });
+function AntdTable(props: UsersType) {
   return (
-    <div className="bg-white shadow-md rounded-lg w-auto h-5/6 mt-10 mx-10 text-xl font-semibold">
-      <Table
-        columns={columns}
-        dataSource={data}
-        pagination={{ defaultPageSize: 8 }}
-      />
-    </div>
+    <Table
+      columns={columns}
+      dataSource={data}
+      pagination={{ defaultPageSize: 8 }}
+    />
   );
 }
+
+export default AntdTable;

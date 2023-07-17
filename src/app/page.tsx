@@ -7,8 +7,12 @@ import { Fragment, useState } from "react";
 
 import LoginForm from "@/components/auth/LoginForm";
 import AuthNavigationBar from "@/components/auth/layout/AuthNavigationBar";
+import { postRequest } from "@/components/auth/api/postRequest";
+import { antdNotification } from "@/utils/antdNotification";
 
 function LoginPage() {
+  const loginUrl = "http://127.0.0.1:8000/api/login/";
+
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
@@ -21,11 +25,41 @@ function LoginPage() {
   const { values, errors, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues: initialValues,
     validationSchema: loginSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       setIsLoading(true);
-      console.log(values);
 
-      router.replace("/home");
+      const res = await postRequest(loginUrl, {
+        email: values.email,
+        password: values.password,
+      });
+
+      const resData = await res.json();
+
+      if (res.ok) {
+        console.log(resData);
+        if (resData["role"] == 1) {
+          antdNotification("success", "Login Success", "Logged in as Admin");
+          setTimeout(() => {
+            setIsLoading(false);
+            router.replace("/admin/home");
+          }, 3000);
+        } else {
+          antdNotification("success", "Login Success", "Logged in as User");
+          setTimeout(() => {
+            setIsLoading(false);
+            router.replace("/home");
+          }, 3000);
+        }
+      } else if (
+        resData["detail"] === "Incorrect authentication credentials."
+      ) {
+        setIsLoading(false);
+        antdNotification(
+          "error",
+          "Login Failed",
+          "Incorrect authentication credentials"
+        );
+      }
     },
   });
 

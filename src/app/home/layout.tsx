@@ -2,9 +2,9 @@ import MainNav from "@/components/user/MainNav";
 import SideBar from "@/components/user/SideBar";
 
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+// import { Poppins } from "next/font/google";
 
-const poppins = Poppins({ weight: "400", subsets: ["latin"] });
+// const poppins = Poppins({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Home",
@@ -18,7 +18,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={poppins.className}>
+      {/* <body className={poppins.className}> */}
+      <body>
         <div className="flex h-screen">
           <SideBar />
           <div className="w-full flex flex-col h-screen">

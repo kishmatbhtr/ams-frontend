@@ -1,5 +1,6 @@
 "use client";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CaretDownFilled, LogoutOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { useState } from "react";
@@ -16,9 +17,11 @@ export default function MainNav() {
           setShowPanel(!showPanel);
         }}
       >
-        {/* <Image className="" src={userImg} width={32} alt="alt" /> */}
         <p className="px-2 font-semibold">User</p>
-        <img src="/images/profile.png" alt="" className="w-8" />
+        <Avatar>
+          <AvatarImage src="/images/user.png" />
+          <AvatarFallback>U</AvatarFallback>
+        </Avatar>
         <CaretDownFilled />
       </div>
       <div

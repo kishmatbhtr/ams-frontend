@@ -1,5 +1,6 @@
 "use client";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CaretDownFilled, LogoutOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { useState } from "react";
@@ -17,7 +18,10 @@ export default function MainNav() {
         }}
       >
         <p className="px-2 font-semibold">Admin</p>
-        <img src="/images/profile.png" alt="" className="w-8" />
+        <Avatar>
+          <AvatarImage src="/images/profile.png" />
+          <AvatarFallback>A</AvatarFallback>
+        </Avatar>
         <CaretDownFilled />
       </div>
       <div
