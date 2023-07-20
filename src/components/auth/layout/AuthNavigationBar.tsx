@@ -4,7 +4,7 @@ function AuthNavigationBar(props: any) {
   return (
     <div className="w-full mb-4 h-14 bg-white flex items-center p-6 justify-between">
       <div>
-        <span className="font-bold text-blue-500">DoMS</span> Agent
+        <span className="font-bold text-blue-500">AMS</span> Agent
       </div>
       <div>
         <Link href={props.routeName}>

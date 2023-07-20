@@ -1,22 +1,52 @@
 "use client";
 
-import { useRef } from "react";
-
 import React from "react";
 import Webcam from "react-webcam";
 import { Button } from "@/components/ui/button";
+import { antdNotification } from "@/utils/antdNotification";
+import { useRouter } from "next/navigation";
 
 const videoConstraints = {
-  width: 600,
-  height: 400,
+  width: 300,
+  height: 300,
   facingMode: "user",
 };
 
 export default function PunchIn() {
+  const router = useRouter();
+
+  async function punchInRequest(data: string) {
+    const punchInUrl = "http://127.0.0.1:8000/api/verify-qr/";
+
+    const res = await fetch(punchInUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        qr_image: data,
+      }),
+    });
+    const resData = await res.json();
+
+    if (res.ok) {
+      if (resData.message === "Punch In Successfully") {
+        antdNotification("success", "Valid QR, Punch In Successfully");
+        router.replace("/home");
+      }
+    } else if (resData.message === "QR Data do not match") {
+      antdNotification("error", "Invalid QR, Please try again");
+    }
+  }
+
   const webcamRef = React.useRef<Webcam>(null);
   const capture = React.useCallback(() => {
     const imageSrc = webcamRef.current?.getScreenshot();
-    console.log(imageSrc);
+
+    if (typeof imageSrc === "string") {
+      punchInRequest(imageSrc.substring(23));
+    }
   }, [webcamRef]);
 
   return (
@@ -24,7 +54,7 @@ export default function PunchIn() {
       <div>
         <Webcam
           screenshotFormat="image/jpeg"
-          style={{ borderRadius: "10px" }}
+          style={{ borderRadius: "8px" }}
           videoConstraints={videoConstraints}
           ref={webcamRef}
         ></Webcam>

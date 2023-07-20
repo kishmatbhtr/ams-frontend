@@ -36,19 +36,18 @@ function LoginPage() {
       const resData = await res.json();
 
       if (res.ok) {
+        localStorage.setItem("firstname", resData["first_name"]);
+        localStorage.setItem("access", resData["access"]);
+        localStorage.setItem("refresh", resData["refresh"]);
         console.log(resData);
         if (resData["role"] == 1) {
           antdNotification("success", "Login Success", "Logged in as Admin");
-          setTimeout(() => {
-            setIsLoading(false);
-            router.replace("/admin/home");
-          }, 3000);
+          router.replace("/admin/home");
+          setIsLoading(false);
         } else {
           antdNotification("success", "Login Success", "Logged in as User");
-          setTimeout(() => {
-            setIsLoading(false);
-            router.replace("/home");
-          }, 3000);
+          router.replace("/home");
+          setIsLoading(false);
         }
       } else if (
         resData["detail"] === "Incorrect authentication credentials."

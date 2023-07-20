@@ -9,7 +9,7 @@ export default function SideBar() {
   return (
     <div className="w-64 bg-[#0F1E54] text-white px-8 py-4">
       <h2 className="font-bold text-2xl">
-        <span className="text-blue-500 ">Do</span>MS
+        <span className="text-blue-500 ">A</span>MS
       </h2>
 
       <div className="mt-28">
@@ -35,7 +35,7 @@ export default function SideBar() {
           >
             QR Code
           </Link>
-          <Link
+          {/* <Link
             href="/home/report"
             className={`${
               pathname == "/home/report"
@@ -44,7 +44,7 @@ export default function SideBar() {
             } cursor-pointer`}
           >
             Report
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>

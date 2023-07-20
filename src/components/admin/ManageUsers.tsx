@@ -3,7 +3,9 @@
 import Link from "next/link";
 
 import { Table, Space } from "antd";
+
 import type { ColumnsType } from "antd/es/table";
+import AddUser from "./AddUser";
 
 interface DataType {
   key?: number;
@@ -52,7 +54,7 @@ const columns: ColumnsType<DataType> = [
 ];
 const data: DataType[] = [];
 
-export default async function ManageUsers(props: any) {
+export default function ManageUsers(props: any) {
   const data: DataType[] = [];
   props.users.map((e: any) => {
     data.push({
@@ -63,12 +65,15 @@ export default async function ManageUsers(props: any) {
     });
   });
   return (
-    <div className="bg-white shadow-md rounded-lg w-auto h-5/6 mt-10 mx-10 text-xl font-semibold">
+    <div className="bg-white shadow-md rounded-lg w-auto h-5/6 mt-10 mx-10 text-xl font-semibold relative">
       <Table
         columns={columns}
         dataSource={data}
         pagination={{ defaultPageSize: 8 }}
       />
+      <div className="absolute top-2 right-12">
+        <AddUser />
+      </div>
     </div>
   );
 }
