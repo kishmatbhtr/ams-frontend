@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { antdNotification } from "@/utils/antdNotification";
 import { Spin } from "antd";
@@ -11,9 +12,12 @@ interface UserIdPropsType {
 
 export default function GenerateQRCode(props: UserIdPropsType) {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   async function generateQR(id: number) {
     setIsLoading(true);
+    
+
     const generateQRUrl = `http://127.0.0.1:8000/api/gen-qr/${id}`;
 
     const res = await fetch(generateQRUrl, {

@@ -7,8 +7,8 @@ import { antdNotification } from "@/utils/antdNotification";
 import { useRouter } from "next/navigation";
 
 const videoConstraints = {
-  width: 300,
-  height: 300,
+  width: 250,
+  height: 250,
   facingMode: "user",
 };
 

@@ -3,7 +3,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 
 import { Form, Input, Select, Spin } from "antd";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, message, Upload } from "antd";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
@@ -15,6 +14,7 @@ interface ProfileType {
   id: number;
   profile_img: string;
   qr_image: string;
+  identity_doc: string;
 }
 
 interface UsersPropsType {
@@ -32,10 +32,14 @@ function UserDetails(props: UsersPropsType) {
 
   const [profileloading, setProfileLoading] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [img, setImg] = useState<string>(props.profile.profile_img);
-  const [docs, setDocs] = useState<string>();
-  const [qrImg, setQRImg] = useState<string>(
-    "http://127.0.0.1:9000/qr-images/Pratik.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=F8UUVEOR2G392V1MFFPB%2F20230720%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20230720T071628Z&X-Amz-Expires=604800&X-Amz-Security-Token=eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NLZXkiOiJGOFVVVkVPUjJHMzkyVjFNRkZQQiIsImV4cCI6MTY4OTg2ODY5OCwicGFyZW50IjoiUk9PVE5BTUUifQ.PZY9QEZh5j9_355EbbUB9Dm8hw_23yy6Sd-3M9mmb6k0oq9w2-GFOPrybjdmwTaEhZxvGjsKfezbNUah93Bk0A&X-Amz-SignedHeaders=host&versionId=null&X-Amz-Signature=790c2405dd0b67de46c9dc07cf7c8eff6f921d85b4e60890d83ec7b61e4646e1"
+  const [img, setImg] = useState<string>(
+    props.profile === null ? "" : props.profile.profile_img
+  );
+  const [docs, setDocs] = useState<string>(
+    props.profile === null ? "" : props.profile.identity_doc
+  );
+  const [qr, setQRCode] = useState<string>(
+    props.profile === null ? "" : props.profile.qr_image
   );
 
   const convertBase64 = (file: File) => {
@@ -136,7 +140,11 @@ function UserDetails(props: UsersPropsType) {
             showUploadList={false}
             beforeUpload={beforeUploadProfile}
           >
-            {img ? <img src={img}></img> : <img src="/images/user.png"></img>}
+            {img ? (
+              <img src={img} className="rounded-full object-cover"></img>
+            ) : (
+              <img src="/images/user.png"></img>
+            )}
           </Upload>
         </div>
 
@@ -200,7 +208,11 @@ function UserDetails(props: UsersPropsType) {
 
         <div className=" h-[60%] flex justify-end items-center">
           <div className="w-36">
-            <img src={qrImg} alt="QR Code" />
+            {props.profile.qr_image === "" ? (
+              <div></div>
+            ) : (
+              <img src={qr} alt="QR Code" />
+            )}
           </div>
         </div>
       </div>

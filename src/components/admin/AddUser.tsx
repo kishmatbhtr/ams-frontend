@@ -5,7 +5,6 @@ import { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
 import AddUserForm from "./AddUserForm";
-import { postRequest } from "../auth/api/postRequest";
 
 export default function AddUser() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
