@@ -1,6 +1,7 @@
 import { ChangeEventHandler, FormEventHandler } from "react";
 
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 
 interface AddFormPropsType {
   firstName?: string;
@@ -12,6 +13,7 @@ interface AddFormPropsType {
   emailHandler: ChangeEventHandler<HTMLInputElement>;
   passwordHandler: ChangeEventHandler<HTMLInputElement>;
   submitHandler: FormEventHandler<HTMLFormElement>;
+  isLoading: boolean;
 }
 
 export default function AddUserForm(props: AddFormPropsType) {
@@ -91,12 +93,23 @@ export default function AddUserForm(props: AddFormPropsType) {
           Password
         </label>
       </div>
-      <Button
-        type="submit"
-        className="bg-[#0F1E54] w-full py-2 rounded-sm text-white text-[16px] font-medium hover:bg-white hover:text-[#0F1E54] hover:font-bold hover:border-2 hover:border-[#0F1E54]"
-      >
-        Add User
-      </Button>
+      {props.isLoading ? (
+        <Button
+          disabled
+          type="submit"
+          className="bg-[#0F1E54] w-full py-2 rounded-sm text-white text-[16px] font-medium hover:bg-white hover:text-[#0F1E54] hover:font-bold hover:border-2 hover:border-[#0F1E54]"
+        >
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          Add User
+        </Button>
+      ) : (
+        <Button
+          type="submit"
+          className="bg-[#0F1E54] w-full py-2 rounded-sm text-white text-[16px] font-medium hover:bg-white hover:text-[#0F1E54] hover:font-bold hover:border-2 hover:border-[#0F1E54]"
+        >
+          Add User
+        </Button>
+      )}
     </form>
   );
 }

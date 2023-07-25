@@ -36,6 +36,7 @@ function LoginPage() {
       const resData = await res.json();
 
       if (res.ok) {
+        localStorage.setItem("userId", resData["userId"]);
         localStorage.setItem("firstname", resData["first_name"]);
         localStorage.setItem("access", resData["access"]);
         localStorage.setItem("refresh", resData["refresh"]);

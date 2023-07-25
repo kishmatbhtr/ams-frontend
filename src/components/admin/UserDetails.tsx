@@ -1,9 +1,10 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 
-import { Form, Input, Select, Spin } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { Form, Input, Select, Spin, Modal } from "antd";
+import { UploadOutlined, FilePdfFilled } from "@ant-design/icons";
 import { Button, message, Upload } from "antd";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 import { postRequest } from "../auth/api/postRequest";
@@ -27,20 +28,32 @@ interface UsersPropsType {
 }
 
 function UserDetails(props: UsersPropsType) {
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState<string>("");
   const [role, setRole] = useState(props.role);
 
   const [profileloading, setProfileLoading] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [img, setImg] = useState<string>(
-    props.profile === null ? "" : props.profile.profile_img
+    props.profile === null || undefined ? "" : props.profile.profile_img
   );
+
   const [docs, setDocs] = useState<string>(
-    props.profile === null ? "" : props.profile.identity_doc
+    props.profile === null || undefined ? "" : props.profile.identity_doc
   );
   const [qr, setQRCode] = useState<string>(
-    props.profile === null ? "" : props.profile.qr_image
+    props.profile === null || undefined ? "" : props.profile.qr_image
   );
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const router = useRouter();
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   const convertBase64 = (file: File) => {
     return new Promise<string | ArrayBuffer | null>((resolve, reject) => {
@@ -148,14 +161,40 @@ function UserDetails(props: UsersPropsType) {
           </Upload>
         </div>
 
-        <div className="flex flex-col items-center w-[45%] mb-3">
-          <Upload accept=".pdf" beforeUpload={beforeUploadDocs}>
-            <Button icon={<UploadOutlined />}>Upload Documents</Button>
+        <div className="flex flex-col justify-between items-center w-[45%]">
+          <Upload
+            accept=".pdf"
+            beforeUpload={beforeUploadDocs}
+            onRemove={() => setDocs("")}
+          >
+            <Button icon={<UploadOutlined />}>Upload Document</Button>
           </Upload>
+          {docs === "" ? (
+            <p className="text-sm pt-6">No documents available for preview</p>
+          ) : (
+            <FilePdfFilled
+              className="text-[2rem] cursor-pointer hover:text-blue-500 pt-6"
+              onClick={showModal}
+            />
+          )}
+          <Modal
+            className="text-center top-[6%] left-[8%] transform-translate"
+            open={isModalOpen}
+            onCancel={handleCancel}
+            footer={null}
+            closable={false}
+          >
+            <object
+              className="w-full"
+              data={docs}
+              type="application/pdf"
+              height={600}
+            ></object>
+          </Modal>
         </div>
       </div>
       <div className="w-full flex justify-center">
-        <div className="w-[50%] flex justify-end">
+        <div className="w-[52%] flex justify-end">
           <Form
             className="w-[85%]"
             labelCol={{ span: 4 }}
@@ -208,11 +247,7 @@ function UserDetails(props: UsersPropsType) {
 
         <div className=" h-[60%] flex justify-end items-center">
           <div className="w-36">
-            {props.profile.qr_image === "" ? (
-              <div></div>
-            ) : (
-              <img src={qr} alt="QR Code" />
-            )}
+            {qr === "" ? <div></div> : <img src={qr} alt="QR Code" />}
           </div>
         </div>
       </div>

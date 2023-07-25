@@ -1,60 +1,81 @@
 "use client";
 
 import Link from "next/link";
-
-import { Table, Space } from "antd";
+import { Table, Space, Popconfirm } from "antd";
 
 import type { ColumnsType } from "antd/es/table";
 import AddUser from "./AddUser";
+import { antdNotification } from "@/utils/antdNotification";
 
 interface DataType {
-  key?: number;
+  key: number;
   firstname?: string;
   lastname?: string;
   email?: string;
 }
 
-// interface UsersType {
-//   id?: number;
-//   first_name?: string;
-//   last_name?: string;
-//   email?: string;
-// }
-
-const columns: ColumnsType<DataType> = [
-  {
-    title: "User ID",
-    dataIndex: "key",
-  },
-  {
-    title: "First Name",
-    dataIndex: "firstname",
-  },
-  {
-    title: "Last Name",
-    dataIndex: "lastname",
-  },
-  {
-    title: "Email",
-    dataIndex: "email",
-  },
-  {
-    title: "Action",
-    render: (_, record) => (
-      <Space size="middle">
-        <Link
-          href={`/admin/home/users/${record.key}`}
-          className="text-blue-300"
-        >
-          View Details
-        </Link>
-      </Space>
-    ),
-  },
-];
-const data: DataType[] = [];
-
 export default function ManageUsers(props: any) {
+  async function deleteUserHandler(id: number) {
+    const res = await fetch(`http://127.0.0.1:8000/api/user/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (res.ok) {
+      props.getUsers();
+      antdNotification("success", "", "User removed successfully");
+    } else {
+      antdNotification("error", "", "Failed to remove user");
+    }
+  }
+
+  const columns: ColumnsType<DataType> = [
+    {
+      title: "User ID",
+      dataIndex: "key",
+    },
+    {
+      title: "First Name",
+      dataIndex: "firstname",
+    },
+    {
+      title: "Last Name",
+      dataIndex: "lastname",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+    },
+    {
+      title: "Action",
+      render: (_, record) => (
+        <Space size="middle">
+          <Link
+            href={`/admin/home/users/${record.key}`}
+            className="text-blue-300"
+          >
+            View Details
+          </Link>
+          <Popconfirm
+            title="Remove User"
+            description="Are you sure, remove this user?"
+            okText="Yes"
+            okType="default"
+            cancelText="No"
+            okButtonProps={{ className: "background-color: blue" }}
+            onConfirm={() => deleteUserHandler(record.key)}
+          >
+            <span className="text-red-400 hover:text-red-500 cursor-pointer">
+              Delete
+            </span>
+          </Popconfirm>
+        </Space>
+      ),
+    },
+  ];
+
   const data: DataType[] = [];
   props.users.map((e: any) => {
     data.push({
@@ -71,8 +92,8 @@ export default function ManageUsers(props: any) {
         dataSource={data}
         pagination={{ defaultPageSize: 8 }}
       />
-      <div className="absolute top-2 right-12">
-        <AddUser />
+      <div className="absolute top-3 right-12">
+        <AddUser getUsers={props.getUsers} />
       </div>
     </div>
   );

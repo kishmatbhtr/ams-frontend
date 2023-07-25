@@ -35,16 +35,6 @@ export default function SideBar() {
           >
             QR Code
           </Link>
-          {/* <Link
-            href="/home/report"
-            className={`${
-              pathname == "/home/report"
-                ? "font-semibold text-white"
-                : "hover:underline"
-            } cursor-pointer`}
-          >
-            Report
-          </Link> */}
         </div>
       </div>
     </div>

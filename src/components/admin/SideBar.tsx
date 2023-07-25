@@ -35,16 +35,6 @@ export default function SideBar() {
           >
             Manage Users
           </Link>
-          {/* <Link
-            href="/admin/home/report"
-            className={`${
-              pathname == "/admin/home/report"
-                ? "font-semibold text-white"
-                : "hover:underline"
-            } cursor-pointer`}
-          >
-            User Reports
-          </Link> */}
         </div>
       </div>
     </div>

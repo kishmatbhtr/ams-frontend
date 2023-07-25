@@ -12,11 +12,11 @@ interface UserIdPropsType {
 
 export default function GenerateQRCode(props: UserIdPropsType) {
   const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
 
   async function generateQR(id: number) {
     setIsLoading(true);
-    
 
     const generateQRUrl = `http://127.0.0.1:8000/api/gen-qr/${id}`;
 
@@ -29,10 +29,13 @@ export default function GenerateQRCode(props: UserIdPropsType) {
     });
 
     if (res.ok) {
-      setIsLoading(false);
+      setIsLoading(false);  
+
+      router.refresh();
+      router.replace(`/admin/home/users/${id}`);
       antdNotification(
         "success",
-        `UserID: ${id}`,
+        `QR for UserID: ${id}`,
         "QR Code generated successfully"
       );
     } else {

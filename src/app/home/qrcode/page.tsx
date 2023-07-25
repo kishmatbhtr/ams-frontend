@@ -1,9 +1,9 @@
-import QRCode from "@/components/user/QRCode"
+import QRCode from "@/components/user/QRCode";
 
-export default function QrCodPage() {
-    return (
-        <div className="bg-[#ECF5FF] flex-grow">
-            <QRCode />
-        </div>
-    )
+export default function QRCodePage() {
+  return (
+    <div className="bg-[#ECF5FF] flex-grow">
+      <QRCode />
+    </div>
+  );
 }

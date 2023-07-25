@@ -5,14 +5,17 @@ import { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
 import AddUserForm from "./AddUserForm";
+import { postRequest } from "../auth/api/postRequest";
+import { antdNotification } from "@/utils/antdNotification";
 
-export default function AddUser() {
+export default function AddUser(props: any) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const [firstName, setFirstName] = useState<string>();
   const [lastName, setLastName] = useState<string>();
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -38,8 +41,30 @@ export default function AddUser() {
     setPassword(event.target.value);
   }
 
-  function submitHandler(event: React.FormEvent<HTMLFormElement>) {
+  async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
+    setIsLoading(true);
     event.preventDefault();
+
+    const res = await postRequest("http://127.0.0.1:8000/api/user/", {
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      password: password,
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      setIsLoading(false);
+      props.getUsers();
+      antdNotification("success", "", "User has been added successfully");
+      setIsModalOpen(false);
+    } else if (
+      (await data["email"][0]) === "user with this email already exists."
+    ) {
+      setIsLoading(false);
+      antdNotification("error", "", "Email is already taken");
+    }
   }
 
   return (
@@ -66,6 +91,7 @@ export default function AddUser() {
           emailHandler={emailHandler}
           passwordHandler={passwordHandler}
           submitHandler={submitHandler}
+          isLoading={isLoading}
         />
       </Modal>
     </div>

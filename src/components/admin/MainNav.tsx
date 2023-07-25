@@ -1,11 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CaretDownFilled, LogoutOutlined } from "@ant-design/icons";
+import { antdNotification } from "@/utils/antdNotification";
 
 export default function MainNav() {
   const [showPanel, setShowPanel] = useState(false);
@@ -16,6 +16,8 @@ export default function MainNav() {
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
     localStorage.removeItem("firstname");
+
+    antdNotification("success", "Logout Success", "Logged out successfully");
 
     router.replace("/");
   }
