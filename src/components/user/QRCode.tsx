@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { getRequest } from "@/components/auth/api/getRequest";
+import { HOST } from "@/utils/constant";
 
 export default function QRCode() {
   const [qrImg, setQRImg] = useState<string>("");
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
-    const getUserUrl = `http://127.0.0.1:8000/api/user/${userId}`;
+    const getUserUrl = `${HOST}/api/user/${userId}`;
 
     getRequest(getUserUrl)
       .then((res) => res.json())

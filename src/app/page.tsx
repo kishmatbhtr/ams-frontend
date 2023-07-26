@@ -9,9 +9,10 @@ import LoginForm from "@/components/auth/LoginForm";
 import AuthNavigationBar from "@/components/auth/layout/AuthNavigationBar";
 import { postRequest } from "@/components/auth/api/postRequest";
 import { antdNotification } from "@/utils/antdNotification";
+import { HOST } from "@/utils/constant";
 
 function LoginPage() {
-  const loginUrl = "http://127.0.0.1:8000/api/login/";
+  const loginUrl = `${HOST}/api/login/`;
 
   const [isLoading, setIsLoading] = useState(false);
 

@@ -23,7 +23,7 @@ export default function SideBar() {
                 : "hover:underline"
             } cursor-pointer`}
           >
-            Punch In/Out Records
+            Punch In Records
           </Link>
           <Link
             href="/admin/home/users"

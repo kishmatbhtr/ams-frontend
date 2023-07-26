@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { antdNotification } from "@/utils/antdNotification";
 import { Spin } from "antd";
+import { HOST } from "@/utils/constant";
 
 interface UserIdPropsType {
   id: number;
@@ -18,7 +19,7 @@ export default function GenerateQRCode(props: UserIdPropsType) {
   async function generateQR(id: number) {
     setIsLoading(true);
 
-    const generateQRUrl = `http://127.0.0.1:8000/api/gen-qr/${id}`;
+    const generateQRUrl = `${HOST}/api/gen-qr/${id}`;
 
     const res = await fetch(generateQRUrl, {
       method: "GET",

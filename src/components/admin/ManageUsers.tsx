@@ -6,6 +6,7 @@ import { Table, Space, Popconfirm } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import AddUser from "./AddUser";
 import { antdNotification } from "@/utils/antdNotification";
+import { HOST } from "@/utils/constant";
 
 interface DataType {
   key: number;
@@ -16,7 +17,7 @@ interface DataType {
 
 export default function ManageUsers(props: any) {
   async function deleteUserHandler(id: number) {
-    const res = await fetch(`http://127.0.0.1:8000/api/user/${id}`, {
+    const res = await fetch(`${HOST}/api/user/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

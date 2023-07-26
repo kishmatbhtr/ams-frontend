@@ -10,6 +10,7 @@ import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 import { postRequest } from "../auth/api/postRequest";
 import { antdNotification } from "@/utils/antdNotification";
 import GenerateQRCode from "./GenerateQRCode";
+import { HOST } from "@/utils/constant";
 
 interface ProfileType {
   id: number;
@@ -120,7 +121,7 @@ function UserDetails(props: UsersPropsType) {
     event.preventDefault();
     setLoading(true);
 
-    const editUserUrl = "http://127.0.0.1:8000/api/update-user/";
+    const editUserUrl = `${HOST}/api/update-user/`;
 
     const res = await postRequest(editUserUrl, {
       id: props.id,

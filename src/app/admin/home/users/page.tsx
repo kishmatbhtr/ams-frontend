@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import ManageUsers from "@/components/admin/ManageUsers";
 import { getRequest } from "@/components/auth/api/getRequest";
 import { Skeleton } from "antd";
+import { HOST } from "@/utils/constant";
 
 interface UsersType {
   id?: number;
@@ -27,16 +28,14 @@ export default function ManageUsersPage() {
   // const users: UsersType[] = await getUsers();
 
   function getUsers() {
-    const getUsersUrl = "http://127.0.0.1:8000/api/user/";
+    const getUsersUrl = `${HOST}/api/user/`;
 
     getRequest(getUsersUrl)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setTimeout(() => {
-          setUsers(data);
-          setIsLoading(false);
-        }, 3000);
+        setUsers(data);
+        setIsLoading(false);
       });
   }
 

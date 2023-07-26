@@ -7,6 +7,7 @@ import { Modal } from "antd";
 import AddUserForm from "./AddUserForm";
 import { postRequest } from "../auth/api/postRequest";
 import { antdNotification } from "@/utils/antdNotification";
+import { HOST } from "@/utils/constant";
 
 export default function AddUser(props: any) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -45,7 +46,7 @@ export default function AddUser(props: any) {
     setIsLoading(true);
     event.preventDefault();
 
-    const res = await postRequest("http://127.0.0.1:8000/api/user/", {
+    const res = await postRequest(`${HOST}/api/user/`, {
       first_name: firstName,
       last_name: lastName,
       email: email,

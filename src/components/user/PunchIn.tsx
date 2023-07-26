@@ -5,6 +5,7 @@ import Webcam from "react-webcam";
 import { Button } from "@/components/ui/button";
 import { antdNotification } from "@/utils/antdNotification";
 import { useRouter } from "next/navigation";
+import { HOST } from "@/utils/constant";
 
 const videoConstraints = {
   width: 250,
@@ -16,7 +17,7 @@ export default function PunchIn() {
   const router = useRouter();
 
   async function punchInRequest(data: string) {
-    const punchInUrl = "http://127.0.0.1:8000/api/verify-qr/";
+    const punchInUrl = `${HOST}/api/verify-qr/`;
 
     const res = await fetch(punchInUrl, {
       method: "POST",

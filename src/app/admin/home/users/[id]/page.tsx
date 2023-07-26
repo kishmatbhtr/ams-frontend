@@ -1,8 +1,9 @@
 import UserDetails from "@/components/admin/UserDetails";
 import { getRequest } from "@/components/auth/api/getRequest";
+import { HOST } from "@/utils/constant";
 
 async function getUserDetails(id: string) {
-  const getUserDetailsUrl = `http://127.0.0.1:8000/api/user/${id}`;
+  const getUserDetailsUrl = `${HOST}/api/user/${id}`;
 
   const res = await getRequest(getUserDetailsUrl);
 

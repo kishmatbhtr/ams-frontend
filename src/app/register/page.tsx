@@ -9,11 +9,12 @@ import RegisterForm from "@/components/auth/RegisterForm";
 import AuthNavigationBar from "@/components/auth/layout/AuthNavigationBar";
 import { postRequest } from "@/components/auth/api/postRequest";
 import { antdNotification } from "@/utils/antdNotification";
+import { HOST } from "@/utils/constant";
 
 function RegisterPage() {
   const router = useRouter();
 
-  const registerUrl = "http://127.0.0.1:8000/api/user/";
+  const registerUrl = `${HOST}/api/user/`;
 
   const initialValues = {
     firstname: "",

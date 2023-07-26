@@ -9,11 +9,10 @@ interface DataType {
   punchOutTime?: string;
 }
 
-interface PunchInOutRecordsType {
+interface PunchInRecordsType {
   id: number;
   email: string;
   punchin_time: string;
-  punchout_time: string;
 }
 
 const columns: ColumnsType<DataType> = [
@@ -29,10 +28,6 @@ const columns: ColumnsType<DataType> = [
     title: "Punch In Time",
     dataIndex: "punchInTime",
   },
-  {
-    title: "Punch Out Time",
-    dataIndex: "punchOutTime",
-  },
 ];
 
 let data: DataType[] = [];
@@ -40,12 +35,11 @@ let data: DataType[] = [];
 export default function PunchInOutRecords(props: any) {
   data = [];
 
-  props.punchInOutRecords.map((e: PunchInOutRecordsType) => {
+  props.punchInRecords.map((e: PunchInRecordsType) => {
     data.push({
       key: e["id"],
       email: e["email"],
       punchInTime: e["punchin_time"],
-      punchOutTime: "",
     });
   });
   return (
@@ -53,7 +47,7 @@ export default function PunchInOutRecords(props: any) {
       <Table
         columns={columns}
         dataSource={data}
-        pagination={{ defaultPageSize: 8 }}
+        pagination={{ pageSize: 8 }}
       />
     </div>
   );
