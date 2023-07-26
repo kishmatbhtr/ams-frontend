@@ -10,6 +10,7 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 3000
+EXPOSE 3001
 
-RUN npm run start
+# CMD ["tail", "-f", "/dev/null"]
+CMD ["npm", "run", "start"]
