@@ -133,6 +133,7 @@ function UserDetails(props: UsersPropsType) {
     if (res.ok) {
       setLoading(false);
       antdNotification("success", "", "Updated Successfully");
+      router.refresh();
     } else {
       setLoading(false);
       antdNotification("error", "", "Update Failed");

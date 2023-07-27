@@ -4,6 +4,7 @@ export async function getRequest(url: RequestInfo | URL) {
     headers: {
       "Content-Type": "application/json",
     },
+    cache: "no-store",
   });
 
   return response;
