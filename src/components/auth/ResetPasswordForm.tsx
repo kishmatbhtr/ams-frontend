@@ -14,7 +14,8 @@ type errorsTypes = {
   confirmpassword?: string;
 };
 
-interface ResetPasswordFormProps {
+interface ResetPasswordFormPropsTypes {
+  isLoading: boolean;
   values: valuesTypes;
   errors: errorsTypes;
   onChange: ChangeEventHandler<HTMLInputElement>;
@@ -22,7 +23,7 @@ interface ResetPasswordFormProps {
   submitHandler: FormEventHandler<HTMLFormElement>;
 }
 
-function ResetPasswordForm(props: ResetPasswordFormProps) {
+function ResetPasswordForm(props: ResetPasswordFormPropsTypes) {
   return (
     <div className="h-[90vh] flex justify-center items-center">
       <div className="bg-white shadow-lg p-8 w-[25rem] rounded-md relative">
@@ -92,12 +93,22 @@ function ResetPasswordForm(props: ResetPasswordFormProps) {
               {props.errors.confirmpassword}
             </p>
           </div>
-          <Button
-            type="submit"
-            className="bg-[#0F1E54] w-full py-2 rounded-sm text-white text-[16px] font-medium hover:bg-white hover:text-[#0F1E54] hover:font-bold hover:border-2 hover:border-[#0F1E54]"
-          >
-            Reset
-          </Button>
+          {props.isLoading ? (
+            <Button
+              disabled
+              className="bg-[#0F1E54] w-full py-2 mt-5 rounded-sm text-white font-medium hover:bg-white hover:text-[#0F1E54] hover:font-bold hover:border-2 hover:border-[#0F1E54]"
+            >
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Resetting Password
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              className="bg-[#0F1E54] w-full py-2 rounded-sm text-white text-[16px] font-medium hover:bg-white hover:text-[#0F1E54] hover:font-bold hover:border-2 hover:border-[#0F1E54]"
+            >
+              Reset
+            </Button>
+          )}
         </form>
       </div>
     </div>

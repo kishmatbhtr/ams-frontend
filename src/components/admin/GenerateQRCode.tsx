@@ -33,7 +33,7 @@ export default function GenerateQRCode(props: UserIdPropsType) {
       setIsLoading(false);  
 
       router.refresh();
-      router.replace(`/admin/home/users/${id}`);
+      router.replace(`/admin/home/users/`);
       antdNotification(
         "success",
         `QR for UserID: ${id}`,

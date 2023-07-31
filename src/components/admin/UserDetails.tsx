@@ -134,6 +134,7 @@ function UserDetails(props: UsersPropsType) {
       setLoading(false);
       antdNotification("success", "", "Updated Successfully");
       router.refresh();
+      router.replace('/admin/home/users')
     } else {
       setLoading(false);
       antdNotification("error", "", "Update Failed");
