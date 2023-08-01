@@ -1,34 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AMS-Main
+Main repository to bind ams-backend, ams-frontend and create a docker based development environment
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+## Steps
+1. Clone the repository
 ```
+git clone git@github.com:kishmatbhtr/ams-main.git
+```
+2. Create environment file
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> Create .env file in the root path of the project. Copy the content provided in env.example
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Get the submodules recursively
+```
+ git submodule update --init --recursive
+```
+4. Switch to the master branch and fetch the latest changes
+```
+# dir -> ams-frontend
+git checkout master
+git pull origin master 
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+# dir -> ams-backend
+git checkout master
+git pull origin master 
+```
+5. Install docker and docker compose
+```
+# installs docker
+sudo apt install docker.io
 
-## Learn More
+# installs docker compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.28.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
-To learn more about Next.js, take a look at the following resources:
+# changes docker-compose permission to an executable
+sudo chmod +x /usr/local/bin/docker-compose
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# enable docker to be used other than superusers
+sudo groupadd docker
+sudo gpasswd -a $USER docker
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
+6. Export Timeout env variables
+```
+export DOCKER_CLIENT_TIMEOUT=120
+export COMPOSE_HTTP_TIMEOUT=120
+```
+7. Run docker as mentioned in makefile script
+```
+make dev
+```
+8. After successful docker build completion, visit ```localhost:3001``` for frontend,  ```localhost:8001``` for backend and ```127.0.0.1:9001``` to access MinIO console (Login credentials provided in .env file)
+9.  To restart the running containers
+```
+make restart
+```
+10. To stop the running containers
+```
+make stop
+```
