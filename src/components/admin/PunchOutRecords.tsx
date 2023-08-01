@@ -5,19 +5,18 @@ import type { ColumnsType } from "antd/es/table";
 interface DataType {
   key?: number;
   email?: string;
-  punchInTime?: string;
   punchOutTime?: string;
 }
 
-interface PunchInRecordsType {
+interface PunchOutRecordsType {
   id: number;
   email: string;
-  punchin_time: string;
+  punchout_time: string;
 }
 
 const columns: ColumnsType<DataType> = [
   {
-    title: "PID",
+    title: "Punch Out ID",
     dataIndex: "key",
   },
   {
@@ -25,21 +24,21 @@ const columns: ColumnsType<DataType> = [
     dataIndex: "email",
   },
   {
-    title: "Punch In Time",
-    dataIndex: "punchInTime",
+    title: "Punch Out Time",
+    dataIndex: "punchOutTime",
   },
 ];
 
 let data: DataType[] = [];
 
-export default function PunchInOutRecords(props: any) {
+export default function PunchOutRecords(props: any) {
   data = [];
 
-  props.punchInRecords.map((e: PunchInRecordsType) => {
+  props.punchInRecords.map((e: PunchOutRecordsType) => {
     data.push({
       key: e["id"],
       email: e["email"],
-      punchInTime: e["punchin_time"],
+      punchOutTime: e["punchout_time"],
     });
   });
   return (

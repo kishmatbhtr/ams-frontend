@@ -85,6 +85,7 @@ export default function AddUserForm(props: AddFormPropsType) {
           required
           value={props.password}
           onChange={props.passwordHandler}
+          minLength={8}
         />
         <label
           htmlFor="password"

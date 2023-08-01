@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import Webcam from "react-webcam";
 import { Button } from "@/components/ui/button";
 import { antdNotification } from "@/utils/antdNotification";
@@ -13,8 +14,18 @@ const videoConstraints = {
   facingMode: "user",
 };
 
-export default function PunchIn() {
+export default function PunchInOut() {
+  const [isPunchedIn, setIsPunchedIn] = useState<boolean>();
+
   const router = useRouter();
+
+  useEffect(() => {
+    if (localStorage.getItem("punchin") != null) {
+      setIsPunchedIn(true);
+    } else {
+      setIsPunchedIn(false);
+    }
+  }, []);
 
   async function punchInRequest(data: string) {
     const punchInUrl = `${HOST}/api/verify-qr/`;
@@ -32,9 +43,10 @@ export default function PunchIn() {
     const resData = await res.json();
 
     if (res.ok) {
+      setIsPunchedIn(true);
+      localStorage.setItem("punchin", "punched");
       if (resData.message === "Punch In Successfully") {
-        antdNotification("success", "Valid QR, Punch In Successfully");
-        router.replace("/home");
+        antdNotification("success", "Valid QR, Punched In Successfully");
       }
     } else if (resData.message === "QR Data do not match") {
       antdNotification("error", "Invalid QR, Please try again");
@@ -50,7 +62,44 @@ export default function PunchIn() {
     }
   }, [webcamRef]);
 
-  return (
+  async function punchOutRequest() {
+    const punchOutUrl = `${HOST}/api/create-punchout/`;
+
+    const res = await fetch(punchOutUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (res.ok) {
+      setIsPunchedIn(false);
+      localStorage.removeItem("punchin");
+      antdNotification("success", "Punched out successfully");
+      router.replace("/home");
+    } else {
+      antdNotification("error", "Punch out failed");
+    }
+  }
+
+  return isPunchedIn ? (
+    <div className="bg-white shadow-md rounded-lg w-auto h-5/6 my-10 mx-10 flex flex-col justify-center items-center text-xl font-semibold">
+      <Image
+        src="/images/exit.png"
+        alt="Punchout logo"
+        width={150}
+        height={150}
+      />
+      <Button
+        type="submit"
+        className="bg-[#0F1E54] py-2 mt-5 rounded-sm text-white text-[16px] font-medium hover:bg-white hover:text-[#0F1E54] hover:font-bold hover:border-2 hover:border-[#0F1E54]"
+        onClick={punchOutRequest}
+      >
+        PUNCH OUT
+      </Button>
+    </div>
+  ) : (
     <div className="bg-white shadow-md rounded-lg w-auto h-5/6 my-10 mx-10 flex flex-col justify-center items-center text-xl font-semibold">
       <div>
         <Webcam

@@ -16,6 +16,8 @@ export default function MainNav() {
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
     localStorage.removeItem("firstname");
+    localStorage.removeItem("role");
+    localStorage.removeItem("userId");
 
     antdNotification("success", "Logout Success", "Logged out successfully");
 

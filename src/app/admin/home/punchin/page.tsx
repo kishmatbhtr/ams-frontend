@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-import PunchInOutRecords from "@/components/admin/PunchInOutRecords";
+import PunchInRecords from "@/components/admin/PunchInRecords";
 import { getRequest } from "@/components/auth/api/getRequest";
 import { HOST } from "@/utils/constant";
 import { Skeleton } from "antd";
@@ -36,7 +36,7 @@ export default function PunchInPage() {
           <Skeleton active />
         </div>
       ) : (
-        <PunchInOutRecords punchInRecords={punchInRecords} />
+        <PunchInRecords punchInRecords={punchInRecords} />
       )}
     </div>
   );

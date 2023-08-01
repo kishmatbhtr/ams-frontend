@@ -21,6 +21,9 @@ export default function MainNav() {
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
     localStorage.removeItem("firstname");
+    localStorage.removeItem("punchin");
+    localStorage.removeItem("role");
+    localStorage.removeItem("userId");
 
     antdNotification("success", "Logout Success", "Logged out successfully");
     router.replace("/");
@@ -28,18 +31,19 @@ export default function MainNav() {
 
   return (
     <div className="flex p-4 border-b-2 justify-between bg-white">
-      <h3 className="font-bold text-lg">W E L C O M E !</h3>
+      <h3 className="font-bold text-lg">
+        W E L C O M E ! {firstName?.toUpperCase()}
+      </h3>
       <div
         className="flex items-center cursor-pointer"
         onClick={() => {
           setShowPanel(!showPanel);
         }}
       >
-        <p className="px-2 font-semibold">{firstName}</p>
-        {/* <p className="px-2 font-semibold">User</p> */}
         <Avatar>
-          <AvatarImage src="/images/user.png" />
-          <AvatarFallback>U</AvatarFallback>
+          <AvatarFallback className="bg-[#0F1E54] text-white">
+            {firstName?.substring(0, 1).toUpperCase()}
+          </AvatarFallback>
         </Avatar>
         <CaretDownFilled />
       </div>

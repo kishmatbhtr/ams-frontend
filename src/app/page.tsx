@@ -3,7 +3,7 @@
 import { loginSchema } from "@/schemas/login";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 
 import LoginForm from "@/components/auth/LoginForm";
 import AuthNavigationBar from "@/components/auth/layout/AuthNavigationBar";
@@ -15,8 +15,29 @@ function LoginPage() {
   const loginUrl = `${HOST}/api/login/`;
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isValidating, setIsValidating] = useState(true);
 
   const router = useRouter();
+
+  useEffect(() => {
+    const user = localStorage.getItem("firstname");
+    const role = localStorage.getItem("role");
+    if (
+      !(user === null || user === undefined) &&
+      !(role === null || role === undefined)
+    ) {
+      if (role === "1") {
+        router.replace("/admin/home");
+      } else {
+        router.replace("/home");
+      }
+    } else {
+      setIsValidating(false);
+    }
+    setTimeout(() => {
+      setIsValidating(false);
+    }, 5000);
+  }, []);
 
   const initialValues = {
     email: "",
@@ -41,6 +62,7 @@ function LoginPage() {
         localStorage.setItem("firstname", resData["first_name"]);
         localStorage.setItem("access", resData["access"]);
         localStorage.setItem("refresh", resData["refresh"]);
+        localStorage.setItem("role", resData["role"]);
         console.log(resData);
         if (resData["role"] == 1) {
           antdNotification("success", "Login Success", "Logged in as Admin");
@@ -64,7 +86,9 @@ function LoginPage() {
     },
   });
 
-  return (
+  return isValidating ? (
+    <p className="p-2">Validating status please wait...</p>
+  ) : (
     <Fragment>
       <AuthNavigationBar routeName="/register" title="Register Now" />
       <LoginForm

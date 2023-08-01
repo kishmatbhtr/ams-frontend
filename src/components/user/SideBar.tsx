@@ -23,7 +23,7 @@ export default function SideBar() {
                 : "hover:underline"
             } cursor-pointer`}
           >
-            Punch In
+            Punch In/Out
           </Link>
           <Link
             href="/home/qrcode"
