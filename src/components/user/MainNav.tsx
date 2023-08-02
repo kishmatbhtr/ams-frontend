@@ -35,7 +35,7 @@ export default function MainNav() {
         W E L C O M E ! {firstName?.toUpperCase()}
       </h3>
       <div
-        className="flex items-center cursor-pointer"
+        className="flex items-center cursor-pointer relative"
         onClick={() => {
           setShowPanel(!showPanel);
         }}
@@ -46,6 +46,7 @@ export default function MainNav() {
           </AvatarFallback>
         </Avatar>
         <CaretDownFilled />
+        <div className="absolute bg-green-500 w-[10px] h-[10px] rounded-full bottom-1 right-4"></div>
       </div>
       <div
         id="dropdown"
