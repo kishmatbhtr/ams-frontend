@@ -66,11 +66,11 @@ function LoginPage() {
         console.log(resData);
         if (resData["role"] == 1) {
           antdNotification("success", "Login Success", "Logged in as Admin");
-          router.replace("/admin/home");
+          router.push("/admin/home");
           setIsLoading(false);
         } else {
           antdNotification("success", "Login Success", "Logged in as User");
-          router.replace("/home");
+          router.push("/home");
           setIsLoading(false);
         }
       } else if (

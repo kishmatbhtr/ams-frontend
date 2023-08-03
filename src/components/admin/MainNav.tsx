@@ -28,7 +28,7 @@ export default function MainNav() {
     <div className="flex p-4 border-b-2 justify-between bg-white">
       <h3 className="font-bold text-lg">D A S H B O A R D</h3>
       <div
-        className="flex items-center cursor-pointer"
+        className="flex items-center cursor-pointer relative"
         onClick={() => {
           setShowPanel(!showPanel);
         }}
@@ -39,6 +39,7 @@ export default function MainNav() {
           <AvatarFallback>A</AvatarFallback>
         </Avatar>
         <CaretDownFilled />
+        <div className="absolute bg-green-500 w-[10px] h-[10px] rounded-full bottom-1 right-4"></div>
       </div>
       <div
         id="dropdown"

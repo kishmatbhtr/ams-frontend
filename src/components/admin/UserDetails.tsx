@@ -232,7 +232,6 @@ function UserDetails(props: UsersPropsType) {
             <Form.Item label="Roles">
               <Select defaultValue={role} onChange={roleHandler}>
                 <Select.Option value={1}>Admin</Select.Option>
-                <Select.Option value={2}>Manager</Select.Option>
                 <Select.Option value={3}>User</Select.Option>
               </Select>
             </Form.Item>
