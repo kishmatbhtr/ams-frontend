@@ -12,5 +12,6 @@ export const antdNotification = (
   notification[type]({
     message: message,
     description: description,
+    duration: 3,
   });
 };

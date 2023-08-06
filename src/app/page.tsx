@@ -64,14 +64,16 @@ function LoginPage() {
         localStorage.setItem("refresh", resData["refresh"]);
         localStorage.setItem("role", resData["role"]);
         console.log(resData);
-        if (resData["role"] == 1) {
+        if (resData["role"] === 1) {
           antdNotification("success", "Login Success", "Logged in as Admin");
-          router.push("/admin/home");
-          setIsLoading(false);
+          setTimeout(() => {
+            router.push("/admin/home");
+          }, 3000);
         } else {
           antdNotification("success", "Login Success", "Logged in as User");
-          router.push("/home");
-          setIsLoading(false);
+          setTimeout(() => {
+            router.push("/home");
+          }, 3000);
         }
       } else if (
         resData["detail"] === "Incorrect authentication credentials."
