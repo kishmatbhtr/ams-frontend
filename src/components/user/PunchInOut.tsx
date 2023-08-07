@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { antdNotification } from "@/utils/antdNotification";
 import { useRouter } from "next/navigation";
 import { HOST } from "@/utils/constant";
+import moment from "moment";
 
 const videoConstraints = {
   width: 250,
@@ -38,6 +39,7 @@ export default function PunchInOut() {
       },
       body: JSON.stringify({
         qr_image: data,
+        datetimein_value: moment().toISOString(true),
       }),
     });
     const resData = await res.json();
@@ -71,6 +73,9 @@ export default function PunchInOut() {
         Authorization: `Bearer ${localStorage.getItem("access")}`,
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        datetimeout_value: moment().toISOString(true),
+      }),
     });
 
     if (res.ok) {

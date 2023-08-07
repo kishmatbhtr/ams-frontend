@@ -34,7 +34,7 @@ let data: DataType[] = [];
 export default function PunchOutRecords(props: any) {
   data = [];
 
-  props.punchInRecords.map((e: PunchOutRecordsType) => {
+  props.punchInRecords.results.map((e: PunchOutRecordsType) => {
     data.push({
       key: e["id"],
       email: e["email"],
