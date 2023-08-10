@@ -2,16 +2,20 @@
 
 import { loginSchema } from "@/schemas/login";
 import { useFormik } from "formik";
+import getConfig from 'next/config';
 import { useRouter } from "next/navigation";
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 import LoginForm from "@/components/auth/LoginForm";
-import AuthNavigationBar from "@/components/auth/layout/AuthNavigationBar";
 import { postRequest } from "@/components/auth/api/postRequest";
+import AuthNavigationBar from "@/components/auth/layout/AuthNavigationBar";
 import { antdNotification } from "@/utils/antdNotification";
 import { HOST } from "@/utils/constant";
 
 function LoginPage() {
+  const config = getConfig();
+  console.log("----1-1-1-1----");
+  console.log(config);
   const loginUrl = `${HOST}/api/login/`;
 
   const [isLoading, setIsLoading] = useState(false);
