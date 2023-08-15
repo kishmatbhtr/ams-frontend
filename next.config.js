@@ -9,6 +9,4 @@ const nextConfig = {
     },
 }
 
-console.log("next-config",process.env.NEXT_PUBLIC_URL);
-
 module.exports = nextConfig

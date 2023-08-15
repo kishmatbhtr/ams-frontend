@@ -4,24 +4,20 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { CaretDownFilled, LogoutOutlined } from "@ant-design/icons";
 import { antdNotification } from "@/utils/antdNotification";
+import { CaretDownFilled, LogoutOutlined } from "@ant-design/icons";
+import { signOut, useSession } from "next-auth/react";
 
 export default function MainNav() {
   const [showPanel, setShowPanel] = useState(false);
 
+  const { data: session } = useSession();
+
   const router = useRouter();
 
   function logoutHandler() {
-    localStorage.removeItem("access");
-    localStorage.removeItem("refresh");
-    localStorage.removeItem("firstname");
-    localStorage.removeItem("role");
-    localStorage.removeItem("userId");
-
     antdNotification("success", "Logout Success", "Logged out successfully");
-
-    router.replace("/");
+    signOut({redirect:true, callbackUrl:"/"});    
   }
 
   return (

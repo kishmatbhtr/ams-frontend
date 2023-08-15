@@ -1,13 +1,13 @@
 "use client";
 
-import { useFormik } from "formik";
 import { registerSchema } from "@/schemas/register";
-import { Fragment } from "react";
+import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
+import { Fragment } from "react";
 
 import RegisterForm from "@/components/auth/RegisterForm";
-import AuthNavigationBar from "@/components/auth/layout/AuthNavigationBar";
 import { postRequest } from "@/components/auth/api/postRequest";
+import AuthNavigationBar from "@/components/auth/layout/AuthNavigationBar";
 import { antdNotification } from "@/utils/antdNotification";
 import { HOST } from "@/utils/constant";
 
@@ -28,7 +28,6 @@ function RegisterPage() {
     initialValues: initialValues,
     validationSchema: registerSchema,
     onSubmit: async (values) => {
-      console.log(values);
       const res = await postRequest(registerUrl, {
         first_name: values.firstname,
         last_name: values.lastname,

@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import ManageUsers from "@/components/admin/ManageUsers";
 import { getRequest } from "@/components/auth/api/getRequest";
-import { Skeleton } from "antd";
 import { HOST } from "@/utils/constant";
+import { Skeleton } from "antd";
 
 interface UsersType {
   id?: number;
@@ -14,18 +14,9 @@ interface UsersType {
   email?: string;
 }
 
-// async function getUsers() {
-//   const getUsersUrl = "http://127.0.0.1:8000/api/user/";
-
-//   const res = await getRequest(getUsersUrl);
-
-//   return res.json();
-// }
-
 export default function ManageUsersPage() {
   const [users, setUsers] = useState<UsersType>();
   const [isLoading, setIsLoading] = useState(true);
-  // const users: UsersType[] = await getUsers();
 
   function getUsers() {
     const getUsersUrl = `${HOST}/api/user/`;
@@ -33,7 +24,6 @@ export default function ManageUsersPage() {
     getRequest(getUsersUrl)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setUsers(data);
         setIsLoading(false);
       });

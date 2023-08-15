@@ -3,36 +3,31 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { CaretDownFilled, LogoutOutlined } from "@ant-design/icons";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { antdNotification } from "@/utils/antdNotification";
+import { CaretDownFilled, LogoutOutlined } from "@ant-design/icons";
+import { signOut, useSession } from "next-auth/react";
 
 export default function MainNav() {
   const [showPanel, setShowPanel] = useState(false);
   const [firstName, setFirstName] = useState<string | null>();
 
   const router = useRouter();
+  const {data:session} = useSession();
 
   useEffect(() => {
     setFirstName(localStorage.getItem("firstname"));
   }, []);
 
-  function logoutHandler() {
-    localStorage.removeItem("access");
-    localStorage.removeItem("refresh");
-    localStorage.removeItem("firstname");
-    localStorage.removeItem("punchin");
-    localStorage.removeItem("role");
-    localStorage.removeItem("userId");
-
+  async function logoutHandler() {
     antdNotification("success", "Logout Success", "Logged out successfully");
-    router.replace("/");
+    await signOut({redirect:true,callbackUrl:"/"});
   }
 
   return (
     <div className="flex p-4 border-b-2 justify-between bg-white">
       <h3 className="font-bold text-lg">
-        W E L C O M E ! {firstName?.toUpperCase()}
+        W E L C O M E ! {session?.user?.first_name.toUpperCase()}
       </h3>
       <div
         className="flex items-center cursor-pointer relative"

@@ -2,26 +2,30 @@
 
 import { loginSchema } from "@/schemas/login";
 import { useFormik } from "formik";
-import getConfig from 'next/config';
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
 
 import LoginForm from "@/components/auth/LoginForm";
-import { postRequest } from "@/components/auth/api/postRequest";
 import AuthNavigationBar from "@/components/auth/layout/AuthNavigationBar";
 import { antdNotification } from "@/utils/antdNotification";
-import { HOST } from "@/utils/constant";
+import { signIn, useSession } from "next-auth/react";
 
 function LoginPage() {
-  const config = getConfig();
-  console.log("----1-1-1-1----");
-  console.log(config);
-  const loginUrl = `${HOST}/api/login/`;
+  const session = useSession();
+
+  if(session?.data?.user.role == 1){
+    redirect("/admin/home");
+  }
+  else if(session.data?.user.role == 3){
+    redirect("/home");
+  }
+  else{}
 
   const [isLoading, setIsLoading] = useState(false);
   const [isValidating, setIsValidating] = useState(true);
 
   const router = useRouter();
+
 
   useEffect(() => {
     const user = localStorage.getItem("firstname");
@@ -31,8 +35,10 @@ function LoginPage() {
       !(role === null || role === undefined)
     ) {
       if (role === "1") {
+        antdNotification("success", "Login Success", "Logged in as Admin");
         router.replace("/admin/home");
       } else {
+        antdNotification("success", "Login Success", "Logged in as User");
         router.replace("/home");
       }
     } else {
@@ -54,42 +60,20 @@ function LoginPage() {
     onSubmit: async (values) => {
       setIsLoading(true);
 
-      const res = await postRequest(loginUrl, {
-        email: values.email,
-        password: values.password,
-      });
+      const result = await signIn('credentials',{email:values.email,password:values.password, redirect:false})
 
-      const resData = await res.json();
-
-      if (res.ok) {
-        localStorage.setItem("userId", resData["userId"]);
-        localStorage.setItem("firstname", resData["first_name"]);
-        localStorage.setItem("access", resData["access"]);
-        localStorage.setItem("refresh", resData["refresh"]);
-        localStorage.setItem("role", resData["role"]);
-        console.log(resData);
-        if (resData["role"] === 1) {
-          antdNotification("success", "Login Success", "Logged in as Admin");
-          setTimeout(() => {
-            router.push("/admin/home");
-          }, 3000);
-        } else {
-          antdNotification("success", "Login Success", "Logged in as User");
-          setTimeout(() => {
-            router.push("/home");
-          }, 3000);
-        }
-      } else if (
-        resData["detail"] === "Incorrect authentication credentials."
-      ) {
+      if (result?.error) {
+        // Handle authentication error
         setIsLoading(false);
         antdNotification(
-          "error",
-          "Login Failed",
-          "Incorrect authentication credentials"
-        );
+              "error",
+              "Login Failed",
+              "Incorrect authentication credentials"
+            );
+      } else {
+        }
       }
-    },
+
   });
 
   return isValidating ? (
